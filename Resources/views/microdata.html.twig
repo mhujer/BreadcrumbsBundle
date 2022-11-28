@@ -1,4 +1,4 @@
-{% if wo_breadcrumbs()|length %}
+{% if breadcrumbs|length %}
     {%- apply spaceless -%}
         <ol id="{{ listId }}" class="{{ listClass }}" itemscope itemtype="http://schema.org/BreadcrumbList">
             {% for b in breadcrumbs %}
