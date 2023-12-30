@@ -8,37 +8,37 @@ jobs:
             fail-fast: false
             matrix:
                 operating-system: [ ubuntu-latest ]
-                php-versions: [ '7.4', '8.0', '8.1' ]
+                php-versions: [ '8.1', '8.2', '8.3' ]
                 composer-dependencies: [ '', '--prefer-lowest' ]
                 symfony-version: [ '' ]
                 extra-label: [ '' ]
                 include:
-                    # SF 4.4 and 5.4
-                    -   php-versions: '8.0'
+                    # SF 5.4 and 6.4
+                    -   php-versions: '8.1'
                         operating-system: ubuntu-latest
-                        symfony-version: '4.4.*'
-                        extra-label: 'SF 4.4'
+                        symfony-version: '5.4.*'
+                        extra-label: 'SF 5.4'
 
-                    -   php-versions: '8.0'
+                    -   php-versions: '8.2'
                         operating-system: ubuntu-latest
                         symfony-version: '5.4.*'
                         extra-label: 'SF 5.4'
 
                     -   php-versions: '8.1'
                         operating-system: ubuntu-latest
-                        symfony-version: '5.4.*'
-                        extra-label: 'SF 5.4'
-
-                    # Windows
-                    -   php-versions: '7.4'
-                        operating-system: windows-latest
-
-                    # Windows
-                    -   php-versions: '8.0'
-                        operating-system: windows-latest
+                        symfony-version: '6.4.*'
+                        extra-label: 'SF 6.4'
 
                     # Windows
                     -   php-versions: '8.1'
+                        operating-system: windows-latest
+
+                    # Windows
+                    -   php-versions: '8.2'
+                        operating-system: windows-latest
+
+                    # Windows
+                    -   php-versions: '8.3'
                         operating-system: windows-latest
 
         steps:
@@ -66,6 +66,11 @@ jobs:
             -   name: Specific Symfony version
                 if: ${{ matrix.symfony-version != '' }}
                 run: composer require --dev --no-update symfony/symfony=${{ matrix.symfony-version }}
+
+            # for some reason vendor/symfony/symfony/src/Symfony/Bridge/Monolog/Processor/CompatibilityProcessor.php tries to load Monolog, so let's just add it
+            -   name: Install Monolog for Symfony 6.4
+                if: ${{ matrix.symfony-version == '6.4.*' }}
+                run: composer require --dev --no-update monolog/monolog=3.5.0
 
             -   name: Install Composer dependencies
                 run: composer update --no-progress --prefer-dist --optimize-autoloader ${{ matrix.composer-dependencies }}
