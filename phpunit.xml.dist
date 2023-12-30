@@ -6,12 +6,12 @@
          colors="true"
          bootstrap="vendor/autoload.php"
          failOnRisky="true"
-         verbose="true"
          beStrictAboutChangesToGlobalState="true"
          beStrictAboutOutputDuringTests="true"
+         cacheDirectory="var/.phpunit.cache"
 >
     <php>
-        <ini name="error_reporting" value="-1" />
+        <ini name="error_reporting" value="-1"/>
     </php>
 
     <testsuites>
