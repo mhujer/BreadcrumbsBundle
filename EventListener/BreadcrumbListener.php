@@ -4,17 +4,22 @@ namespace WhiteOctober\BreadcrumbsBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Routing\RouterInterface;
 use WhiteOctober\BreadcrumbsBundle\Attribute\Breadcrumb;
 use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 class BreadcrumbListener
 {
+    private ControllerArgumentsEvent $event;
+    private PropertyAccessor $propertyAccess;
+
     public function __construct(
         private readonly Breadcrumbs     $breadcrumbs,
         private readonly RouterInterface $router,
     )
     {
+        $this->propertyAccess = PropertyAccess::createPropertyAccessor();
     }
 
     public function onKernelController(ControllerArgumentsEvent $event): void
@@ -22,8 +27,7 @@ class BreadcrumbListener
         if (!$event->isMainRequest()) {
             return;
         }
-
-        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        $this->event = $event;
 
         /** @var Breadcrumb $breadcrumbAttribute */
         foreach ($event->getAttributes(Breadcrumb::class) as $breadcrumbAttribute) {
@@ -42,23 +46,39 @@ class BreadcrumbListener
                 continue;
             }
             foreach ($matches[0] as $match) {
-                $fullPathAttribute = trim($match, '{}');
-                if (empty($fullPathAttribute)) {
+                $data = $this->extractData($match);
+                if ($data === null) {
                     continue;
                 }
-                $nameObject = explode('.', $fullPathAttribute)[0];
-                $mb_strlen = mb_strlen($nameObject);
-                $propertyPath = mb_strcut($fullPathAttribute, ++$mb_strlen);
-
-                $object = $event->getNamedArguments()[$nameObject];
-                $data = (string)$propertyAccessor->getValue($object, $propertyPath);
 
                 $text = str_replace($match, $data, $text);
+            }
 
+            $parameters = [];
+            foreach ($breadcrumbAttribute->getParameters() as $key => $parameter) {
+                $parameters[$key] = $this->extractData($parameter);
+            }
+            if (!empty($parameters)) {
+                $breadcrumbAttribute->setParameters($parameters);
             }
 
             $this->addBreadcrumb($breadcrumbAttribute->setText($text));
         }
+    }
+
+    private function extractData(string $match): ?string
+    {
+        $fullPathAttribute = trim($match, '{}');
+        if (empty($fullPathAttribute)) {
+            return null;
+        }
+        $nameObject = explode('.', $fullPathAttribute)[0];
+        $mb_strlen = mb_strlen($nameObject);
+        $propertyPath = mb_strcut($fullPathAttribute, ++$mb_strlen);
+
+        $object = $this->event->getNamedArguments()[$nameObject];
+
+        return (string)$this->propertyAccess->getValue($object, $propertyPath);
     }
 
 

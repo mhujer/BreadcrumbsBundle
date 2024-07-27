@@ -71,4 +71,9 @@ class Breadcrumb
 
         return $this;
     }
+
+    public function setParameters(array $parameters): void
+    {
+        $this->parameters = $parameters;
+    }
 }
