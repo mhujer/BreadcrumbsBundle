@@ -1,38 +1,35 @@
 {
-  "name": "mhujer/breadcrumbs-bundle",
-  "type": "symfony-bundle",
-  "license": "MIT",
-  "description": "Breadcrumbs bundle for Symfony",
-  "keywords": [
-    "breadcrumbs",
-    "symfony"
-  ],
-  "homepage": "https://github.com/mhujer/BreadcrumbsBundle",
-  "authors": [
-    {
-      "name": "Rich Sage",
-      "email": "rich.sage@gmail.com"
+    "name": "mhujer/breadcrumbs-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "description": "Breadcrumbs bundle for Symfony",
+    "keywords": ["breadcrumbs", "symfony"],
+    "homepage": "https://github.com/mhujer/BreadcrumbsBundle",
+    "authors": [
+        {
+            "name": "Rich Sage",
+            "email": "rich.sage@gmail.com"
+        },
+        {
+            "name": "Martin Hujer",
+            "email": "mail@martinhujer.cz"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "symfony/framework-bundle": "^5.4|^6.0|^7.0",
+        "symfony/translation-contracts": "^1.1|^2.0|^3.0",
+        "symfony/twig-bundle": "^5.4|^6.0|^7.0",
+        "twig/twig": "^1.38.1|^2.7.1|^3.0",
+        "symfony/property-access": "^5.4|^6.0|^7.0"
     },
-    {
-      "name": "Martin Hujer",
-      "email": "mail@martinhujer.cz"
+    "require-dev": {
+        "phpunit/phpunit": "10.5.5",
+        "symfony/browser-kit": "^5.4|^6.0|^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WhiteOctober\\BreadcrumbsBundle\\": ""
+        }
     }
-  ],
-  "require": {
-    "php": "^8.1",
-    "symfony/framework-bundle": "^5.4|^6.0|^7.0",
-    "symfony/translation-contracts": "^1.1|^2.0|^3.0",
-    "symfony/twig-bundle": "^5.4|^6.0|^7.0",
-    "twig/twig": "^1.38.1|^2.7.1|^3.0",
-    "symfony/property-access": "^6"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "10.5.5",
-    "symfony/browser-kit": "^5.4|^6.0|^7.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "WhiteOctober\\BreadcrumbsBundle\\": ""
-    }
-  }
 }
