@@ -31,7 +31,7 @@ class BundleTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase
         /** @var \WhiteOctober\BreadcrumbsBundle\Twig\Extension\BreadcrumbsExtension $breadcrumbsExtension */
         $breadcrumbsExtension = $container->get('white_october_breadcrumbs.twig');
 
-        self::assertSame(
+        self::assertStringEqualsStringIgnoringLineEndings(
 <<<'EOD'
     <ol id="wo-breadcrumbs" class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
                     <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
@@ -59,7 +59,7 @@ EOD,
         /** @var \WhiteOctober\BreadcrumbsBundle\Twig\Extension\BreadcrumbsExtension $breadcrumbsExtension */
         $breadcrumbsExtension = $container->get('white_october_breadcrumbs.twig');
 
-        self::assertSame(
+        self::assertStringEqualsStringIgnoringLineEndings(
 <<<'EOD'
     <ol id="wo-breadcrumbs" class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
                     <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
@@ -90,7 +90,7 @@ EOD,
         /** @var \WhiteOctober\BreadcrumbsBundle\Twig\Extension\BreadcrumbsExtension $breadcrumbsExtension */
         $breadcrumbsExtension = $container->get('white_october_breadcrumbs.twig');
 
-        self::assertSame(
+        self::assertStringEqualsStringIgnoringLineEndings(
             <<<'EOD'
     <ol id="wo-breadcrumbs" class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
                     <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
