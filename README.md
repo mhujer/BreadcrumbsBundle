@@ -1,3 +1,7 @@
+## **Note:** This package is no longer maintained, see [discussion in issue #44](https://github.com/mhujer/BreadcrumbsBundle/issues/44). You can use [Huluti/BreadcrumbsBundle](https://github.com/Huluti/BreadcrumbsBundle) which supports Symfony 8.
+
+--------
+
 _This is a fork of [whiteoctober/BreadcrumbsBundle](https://github.com/whiteoctober/BreadcrumbsBundle) maintained for newer Symfony versions. See [whiteoctober/BreadcrumbsBundle#106](https://github.com/whiteoctober/BreadcrumbsBundle/issues/106)._
 
 Installation
